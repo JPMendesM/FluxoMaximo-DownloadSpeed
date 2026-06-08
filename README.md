@@ -1,4 +1,4 @@
-# MCSES Download Speed
+# CSES Download Speed
 
 Trabalho Prático 3 — Unidade 3
 Disciplina: Resolução de Problemas com Grafos
@@ -8,7 +8,7 @@ Tema: Fluxo Máximo em Redes
 
 **Nome:** Download Speed
 **Plataforma:** CSES
-**Link:**[https://cses.fi/problemset/task/1694/](https://cses.fi/problemset/task/1694/)
+**Link:** [https://cses.fi/problemset/task/1694/](https://cses.fi/problemset/task/1694/)
 
 ## Integrantes
 
