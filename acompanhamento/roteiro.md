@@ -113,18 +113,27 @@ Assim, maximizar o fluxo entre o computador `1` e o computador `n` equivale a ma
 
 ## 5. Algoritmo escolhido
 
-O algoritmo escolhido é o **Edmonds-Karp**.
+O algoritmo escolhido é o **Dinic**.
 
-Ele é uma variação do método de Ford-Fulkerson que utiliza **BFS** para encontrar caminhos aumentantes no grafo residual.
+Inicialmente foi considerada a utilização do algoritmo Edmonds-Karp, por ser uma implementação clássica de fluxo máximo baseada em caminhos aumentantes encontrados por BFS. Entretanto, durante os testes realizados para o problema CSES Download Speed, observou-se que o Edmonds-Karp apresentou desempenho insuficiente para os maiores casos de teste da plataforma.
 
-Essa escolha é adequada porque:
+Após autorização do professor da disciplina, foi adotado o algoritmo **Dinic**, que mantém a mesma modelagem de rede de fluxo e utiliza os mesmos conceitos fundamentais de fluxo máximo e grafo residual, porém com desempenho superior.
 
-* o problema é diretamente um problema de fluxo máximo;
-* o Edmonds-Karp encontra caminhos aumentantes de forma sistemática;
-* a BFS torna o comportamento do algoritmo mais previsível;
-* o grafo residual permite atualizar capacidades e corrigir escolhas anteriores.
+O algoritmo funciona em duas etapas principais:
 
----
+1. Construção de um grafo de níveis utilizando BFS.
+2. Busca de fluxos bloqueantes utilizando DFS sobre o grafo de níveis.
+
+O processo é repetido até que o sorvedouro não possa mais ser alcançado no grafo residual.
+
+### Complexidade
+
+Considerando:
+
+```text
+V = número de vértices
+E = número de arestas
+```
 
 ## 6. Instância pequena
 
@@ -311,6 +320,8 @@ Portanto, ao final do algoritmo, imprimimos:
 
 O problema foi modelado como fluxo máximo porque precisamos maximizar a quantidade total de dados enviada de uma origem até um destino.
 
-Cada computador é um vértice, cada conexão é uma aresta direcionada com capacidade, o computador `1` é a origem e o computador `n` é o sorvedouro.
+Cada computador é representado por um vértice, cada conexão por uma aresta direcionada com capacidade, o computador `1` representa a origem e o computador `n` representa o sorvedouro.
 
-O Edmonds-Karp encontra caminhos aumentantes no grafo residual, envia fluxo pelo gargalo de cada caminho e atualiza as capacidades até não existir mais caminho possível. O valor final acumulado é a maior velocidade de download possível.
+A implementação final utiliza o algoritmo de Dinic, que constrói grafos de níveis e encontra fluxos bloqueantes no grafo residual até atingir o fluxo máximo.
+
+O valor final obtido corresponde à maior velocidade total de download possível entre o servidor e o computador de destino.
