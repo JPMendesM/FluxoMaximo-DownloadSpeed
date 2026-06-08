@@ -8,13 +8,13 @@ Tema: Fluxo Máximo em Redes
 
 **Nome:** Download Speed
 **Plataforma:** CSES
-**Link:** [https://cses.fi/problemset/task/1694/](https://cses.fi/problemset/task/1694/)
+**Link:**[https://cses.fi/problemset/task/1694/](https://cses.fi/problemset/task/1694/)
 
 ## Integrantes
 
-- João Pedro Mendes
-- Marcelo Filho
-- Nicolas dos Santos
+* João Pedro Mendes
+* Marcelo Filho
+* Nicolas dos Santos
 
 ## Linguagem utilizada
 
@@ -22,15 +22,21 @@ Java
 
 ## Como executar a solução
 
-A solução estará disponível na pasta `src/`.
+A solução está disponível na pasta `src/`.
 
-Para executar:
+Compilação:
 
 ```bash
-java src/Main.java
+javac src/Main.java
 ```
 
-A entrada deve ser fornecida pelo terminal no formato do problema.
+Execução:
+
+```bash
+java -cp src Main
+```
+
+A entrada deve ser fornecida pelo terminal no formato especificado pelo problema.
 
 Exemplo:
 
@@ -49,6 +55,8 @@ Saída esperada:
 6
 ```
 
+---
+
 ## Contexto do problema
 
 O problema descreve uma rede de computadores conectados por canais de transmissão de dados. Cada conexão possui uma velocidade máxima de envio.
@@ -57,16 +65,20 @@ O objetivo é calcular a maior velocidade total de download possível entre o co
 
 Esse cenário é modelado como um problema de **fluxo máximo em rede capacitada**.
 
+---
+
 ## Modelagem como rede de fluxo
 
 A conversão do enunciado para rede de fluxo é direta:
 
-- Cada computador é representado como um vértice.
-- Cada conexão entre computadores é representada como uma aresta direcionada.
-- A velocidade máxima de cada conexão é usada como capacidade da aresta.
-- O computador `1` é a origem.
-- O computador `n` é o sorvedouro.
-- O valor do fluxo máximo representa a maior velocidade total de download.
+* Cada computador é representado como um vértice.
+* Cada conexão entre computadores é representada como uma aresta direcionada.
+* A velocidade máxima de cada conexão é usada como capacidade da aresta.
+* O computador `1` é a origem.
+* O computador `n` é o sorvedouro.
+* O valor do fluxo máximo representa a maior velocidade total de download.
+
+---
 
 ## Origem, sorvedouro, vértices, arestas e capacidades
 
@@ -136,18 +148,24 @@ gera:
 
 Ou seja, no máximo 3 unidades de fluxo podem passar de `1` para `2`.
 
+---
+
 ## Algoritmo utilizado
 
-O algoritmo utilizado será o **Edmonds-Karp**, uma variação do método de Ford-Fulkerson.
+A implementação final utiliza o algoritmo **Dinic**.
 
-A diferença principal é que o Edmonds-Karp usa **BFS** para encontrar caminhos aumentantes no grafo residual.
+Inicialmente foi considerada a utilização do algoritmo Edmonds-Karp por sua simplicidade na explicação dos conceitos de fluxo máximo. Entretanto, durante os testes realizados na plataforma CSES, observou-se que o Edmonds-Karp apresentou estouro de tempo nos maiores casos de teste.
 
-A escolha do Edmonds-Karp é adequada porque:
+Após autorização do professor da disciplina, foi adotado o algoritmo Dinic, que mantém a mesma modelagem de rede de fluxo e utiliza os mesmos conceitos fundamentais de fluxo máximo e grafo residual, porém com desempenho significativamente superior.
 
-- o problema é de fluxo máximo;
-- as capacidades podem ser grandes;
-- a BFS torna a escolha dos caminhos aumentantes mais previsível;
-- a implementação com grafo residual é direta e segura para esse tipo de problema.
+O algoritmo funciona em duas etapas:
+
+1. Construção de um grafo de níveis utilizando BFS.
+2. Busca de fluxos bloqueantes utilizando DFS sobre o grafo de níveis.
+
+O processo é repetido até que não exista mais caminho da origem até o sorvedouro no grafo residual.
+
+---
 
 ## Papel do grafo residual
 
@@ -155,7 +173,14 @@ O grafo residual representa quanto fluxo ainda pode passar por cada aresta.
 
 Quando enviamos fluxo por uma aresta, a capacidade residual dessa aresta diminui.
 
-Ao mesmo tempo, é criada ou atualizada uma aresta reversa, permitindo que o algoritmo corrija escolhas anteriores, caso encontre uma combinação melhor de caminhos depois.
+Ao mesmo tempo, uma aresta reversa recebe capacidade residual correspondente ao fluxo enviado, permitindo que o algoritmo reajuste decisões anteriores caso encontre caminhos melhores posteriormente.
+
+O algoritmo Dinic utiliza o grafo residual para construir sucessivos grafos de níveis. Em cada fase:
+
+* O BFS determina os níveis dos vértices.
+* O DFS encontra fluxos bloqueantes respeitando esses níveis.
+
+O algoritmo termina quando o sorvedouro não pode mais ser alcançado pela BFS no grafo residual.
 
 Exemplo:
 
@@ -166,9 +191,7 @@ capacidade residual direta = 2
 capacidade residual reversa = 3
 ```
 
-O algoritmo continua procurando caminhos aumentantes no grafo residual até não existir mais caminho da origem ao sorvedouro.
-
-Quando isso acontece, o fluxo máximo foi encontrado.
+---
 
 ## Conversão do fluxo para a resposta
 
@@ -182,6 +205,8 @@ Portanto:
 Fluxo máximo = maior velocidade total de download
 ```
 
+---
+
 ## Corte mínimo, emparelhamento ou reconstrução de caminhos
 
 Neste problema, não é necessário recuperar corte mínimo, emparelhamento ou reconstruir caminhos finais.
@@ -190,20 +215,29 @@ O problema pede apenas o valor máximo de download.
 
 Assim, basta imprimir o valor total do fluxo máximo encontrado.
 
+---
+
 ## Análise de complexidade
 
 Considerando:
 
-- `V` = número de vértices;
-- `E` = número de arestas.
+* `V` = número de vértices;
+* `E` = número de arestas.
 
-O Edmonds-Karp possui complexidade de tempo:
+O algoritmo de Dinic possui complexidade de tempo, no pior caso geral:
 
 ```text
-O(V * E²)
+O(V² · E)
 ```
 
-A busca por caminhos aumentantes é feita com BFS, e cada BFS percorre as arestas do grafo residual.
+Para este problema:
+
+```text
+V ≤ 500
+E ≤ 1000
+```
+
+Essa complexidade é adequada para os limites da plataforma CSES.
 
 A complexidade de memória é:
 
@@ -211,19 +245,23 @@ A complexidade de memória é:
 O(V + E)
 ```
 
-pois a rede é armazenada usando lista de adjacência com arestas residuais e arestas reversas.
+pois a rede é armazenada utilizando listas de adjacência e arestas residuais.
+
+---
 
 ## Casos especiais relevantes
 
 Alguns casos que precisam ser considerados:
 
-- Pode não existir caminho entre o computador `1` e o computador `n`; nesse caso, o fluxo máximo será `0`.
-- Podem existir múltiplas arestas entre os mesmos vértices, e todas devem ser consideradas.
-- As capacidades podem ser grandes, então é importante usar um tipo numérico que suporte valores altos.
-- As conexões são direcionadas, portanto uma aresta `a → b` não significa que também existe `b → a`.
-- O algoritmo deve trabalhar com grafo residual para permitir atualização das capacidades e uso de arestas reversas.
+* Pode não existir caminho entre o computador `1` e o computador `n`; nesse caso, o fluxo máximo será `0`.
+* Podem existir múltiplas arestas entre os mesmos vértices, e todas devem ser consideradas.
+* As capacidades podem ser grandes, portanto deve-se utilizar o tipo `long`.
+* As conexões são direcionadas, portanto uma aresta `a → b` não implica a existência de `b → a`.
+* O algoritmo deve utilizar corretamente o grafo residual para atualizar capacidades e arestas reversas.
 
-## Exemplo manual
+---
+
+## Exemplo manual utilizando Dinic
 
 Entrada:
 
@@ -258,7 +296,29 @@ Sorvedouro:
 4
 ```
 
-Caminhos aumentantes principais:
+### Construção do grafo de níveis
+
+Executando uma BFS a partir da origem:
+
+```text
+Nível 0: 1
+Nível 1: 2, 3
+Nível 2: 4
+```
+
+Representação:
+
+```text
+1
+↓ ↓
+2 3
+↓ ↓
+4
+```
+
+### Fluxo bloqueante
+
+Primeiro caminho:
 
 ```text
 1 → 2 → 4
@@ -294,17 +354,21 @@ Fluxo enviado:
 4
 ```
 
-Fluxo total:
+Fluxo total acumulado:
 
 ```text
 2 + 4 = 6
 ```
 
-Resposta:
+Após a atualização do grafo residual, não existe mais caminho da origem até o sorvedouro.
+
+Logo:
 
 ```text
-6
+Fluxo Máximo = 6
 ```
+
+---
 
 ## Evidência de Accepted
 
@@ -326,6 +390,8 @@ ou
 evidencias/accepted.pdf
 ```
 
+---
+
 ## Estrutura do repositório
 
 ```text
@@ -334,7 +400,7 @@ T3/
 ├── acompanhamento/
 │   └── roteiro.md
 ├── src/
-│   └── main.java
+│   └── Main.java
 ├── evidencias/
 │   └── accepted.png
 ├── apresentacao/
@@ -343,10 +409,14 @@ T3/
     └── entradas_do_problema.txt
 ```
 
+---
+
 ## Conclusão
 
 O problema CSES Download Speed é resolvido por fluxo máximo porque precisamos maximizar a quantidade total de dados transmitida do servidor ao destino, respeitando os limites de capacidade de cada conexão.
 
 A modelagem utiliza o computador `1` como origem, o computador `n` como sorvedouro, os computadores como vértices e as conexões como arestas direcionadas com capacidade.
 
-O algoritmo Edmonds-Karp encontra caminhos aumentantes no grafo residual até não existir mais caminho possível. O valor final acumulado do fluxo corresponde à maior velocidade de download possível.
+A implementação final utiliza o algoritmo Dinic, autorizado pelo professor da disciplina devido às restrições da plataforma CSES. O algoritmo constrói grafos de níveis utilizando BFS e encontra fluxos bloqueantes utilizando DFS sobre o grafo residual.
+
+O valor final acumulado do fluxo corresponde à maior velocidade total de download possível entre o servidor e o computador de destino.
