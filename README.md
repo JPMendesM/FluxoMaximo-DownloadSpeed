@@ -12,7 +12,7 @@ Tema: Fluxo Máximo em Redes
 
 ## Link de apresentação
 
-**Link:** [https://docs.google.com/presentation/d/13g4uv11tUUDUB56cpBiGq-3FY7C-gXZ_n9V-hF7Uxwk/edit?userstoinvite=marcelomrfilho%40gmail.com&sharingaction=manageaccess&role=writer&slide=id.p1#slide=id.p1](https://docs.google.com/presentation/d/13g4uv11tUUDUB56cpBiGq-3FY7C-gXZ_n9V-hF7Uxwk/edit?userstoinvite=marcelomrfilho%40gmail.com&sharingaction=manageaccess&role=writer&slide=id.p1#slide=id.p1)
+**Link:** [https://docs.google.com/presentation/d/13g4uv11tUUDUB56cpBiGq-3FY7C-gXZ_n9V-hF7Uxwk/edit?usp=sharing](https://docs.google.com/presentation/d/13g4uv11tUUDUB56cpBiGq-3FY7C-gXZ_n9V-hF7Uxwk/edit?usp=sharing)
 
 
 ## Integrantes
