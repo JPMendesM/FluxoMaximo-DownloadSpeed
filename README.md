@@ -10,15 +10,16 @@ Tema: Fluxo Máximo em Redes
 **Plataforma:** CSES
 **Link:** [https://cses.fi/problemset/task/1694/](https://cses.fi/problemset/task/1694/)
 
-## Link da apresentação
+## Link de apresentação
 
 **Link:** [https://docs.google.com/presentation/d/13g4uv11tUUDUB56cpBiGq-3FY7C-gXZ_n9V-hF7Uxwk/edit?userstoinvite=marcelomrfilho%40gmail.com&sharingaction=manageaccess&role=writer&slide=id.p1#slide=id.p1](https://docs.google.com/presentation/d/13g4uv11tUUDUB56cpBiGq-3FY7C-gXZ_n9V-hF7Uxwk/edit?userstoinvite=marcelomrfilho%40gmail.com&sharingaction=manageaccess&role=writer&slide=id.p1#slide=id.p1)
 
+
 ## Integrantes
 
-- João Pedro Mendes
-- Marcelo Filho
-- Nicolas dos Santos
+* João Pedro Mendes
+* Marcelo Filho
+* Nicolas dos Santos
 
 ## Linguagem utilizada
 
@@ -75,12 +76,12 @@ Esse cenário é modelado como um problema de **fluxo máximo em rede capacitada
 
 A conversão do enunciado para rede de fluxo é direta:
 
-- Cada computador é representado como um vértice.
-- Cada conexão entre computadores é representada como uma aresta direcionada.
-- A velocidade máxima de cada conexão é usada como capacidade da aresta.
-- O computador `1` é a origem.
-- O computador `n` é o sorvedouro.
-- O valor do fluxo máximo representa a maior velocidade total de download.
+* Cada computador é representado como um vértice.
+* Cada conexão entre computadores é representada como uma aresta direcionada.
+* A velocidade máxima de cada conexão é usada como capacidade da aresta.
+* O computador `1` é a origem.
+* O computador `n` é o sorvedouro.
+* O valor do fluxo máximo representa a maior velocidade total de download.
 
 ---
 
@@ -181,8 +182,8 @@ Ao mesmo tempo, uma aresta reversa recebe capacidade residual correspondente ao 
 
 O algoritmo Dinic utiliza o grafo residual para construir sucessivos grafos de níveis. Em cada fase:
 
-- O BFS determina os níveis dos vértices.
-- O DFS encontra fluxos bloqueantes respeitando esses níveis.
+* O BFS determina os níveis dos vértices.
+* O DFS encontra fluxos bloqueantes respeitando esses níveis.
 
 O algoritmo termina quando o sorvedouro não pode mais ser alcançado pela BFS no grafo residual.
 
@@ -225,8 +226,8 @@ Assim, basta imprimir o valor total do fluxo máximo encontrado.
 
 Considerando:
 
-- `V` = número de vértices;
-- `E` = número de arestas.
+* `V` = número de vértices;
+* `E` = número de arestas.
 
 O algoritmo de Dinic possui complexidade de tempo, no pior caso geral:
 
@@ -257,11 +258,11 @@ pois a rede é armazenada utilizando listas de adjacência e arestas residuais.
 
 Alguns casos que precisam ser considerados:
 
-- Pode não existir caminho entre o computador `1` e o computador `n`; nesse caso, o fluxo máximo será `0`.
-- Podem existir múltiplas arestas entre os mesmos vértices, e todas devem ser consideradas.
-- As capacidades podem ser grandes, portanto deve-se utilizar o tipo `long`.
-- As conexões são direcionadas, portanto uma aresta `a → b` não implica a existência de `b → a`.
-- O algoritmo deve utilizar corretamente o grafo residual para atualizar capacidades e arestas reversas.
+* Pode não existir caminho entre o computador `1` e o computador `n`; nesse caso, o fluxo máximo será `0`.
+* Podem existir múltiplas arestas entre os mesmos vértices, e todas devem ser consideradas.
+* As capacidades podem ser grandes, portanto deve-se utilizar o tipo `long`.
+* As conexões são direcionadas, portanto uma aresta `a → b` não implica a existência de `b → a`.
+* O algoritmo deve utilizar corretamente o grafo residual para atualizar capacidades e arestas reversas.
 
 ---
 
